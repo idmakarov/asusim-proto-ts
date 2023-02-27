@@ -8,8 +8,8 @@ enum SimStatusEnum {
 }
 
 interface StatusIndicatorDefaultProps {
-    status: SimStatusEnum;
-    className: string;
+    status?: SimStatusEnum;
+    className?: string;
 }
 
 interface StatusIndicatorProps extends StatusIndicatorDefaultProps {}
@@ -25,7 +25,7 @@ class StatusIndicator extends React.Component<Props> {
 
     render() {
         return (
-            <div className={`circle-${this.props.status.toString()}`}/>
+            <div className={`circle-${this.props.status === undefined ? "ok" : this.props.status.toString()}`}/>
         );
     }
 }

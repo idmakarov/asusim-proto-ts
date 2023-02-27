@@ -2,11 +2,11 @@ import React from "react";
 import "src/styles/containers.css"
 
 interface TimeStringDefaultProps {
-    className: string;
+    className?: string;
 }
 
 interface TimeStringProps extends TimeStringDefaultProps {
-    time: Date;
+    time?: Date;
 }
 
 type DefaultProps = Readonly<TimeStringDefaultProps>;
@@ -20,7 +20,7 @@ class TimeString extends React.Component<Props> {
     render() {
         return (
             <span className={this.props.className}>
-                {this.props.time.toLocaleTimeString()}
+                {this.props.time === undefined ? "##:##:##" : this.props.time.toLocaleTimeString()}
             </span>
         );
     }

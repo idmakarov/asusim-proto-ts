@@ -1,14 +1,14 @@
 import React, { ReactNode } from "react";
 
 interface ActionButtonDefaultProps {
-    isEnabled: boolean;
-    isSubmitButton: boolean;
+    isEnabled?: boolean;
+    isSubmitButton?: boolean;
     children?: ReactNode;
-    className: string;
+    className?: string;
 }
 
 interface ActionButtonProps extends ActionButtonDefaultProps {
-    onButtonClick: () => void;
+    onButtonClick?: () => void;
 }
 
 type DefaultProps = Readonly<ActionButtonDefaultProps>;
@@ -28,7 +28,7 @@ class ActionButton extends React.Component<Props> {
     }
 
     handleOnClick() {
-        if (this.props.onButtonClick !== null)
+        if (this.props.onButtonClick !== undefined)
             this.props.onButtonClick();
     }
 
