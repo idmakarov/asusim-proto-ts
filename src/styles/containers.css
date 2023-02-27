@@ -1,0 +1,133 @@
+.container-simulation {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    gap: 10px;
+    grid-template-rows: 4em auto;
+    justify-items: stretch;
+    align-items: stretch;
+    justify-content: stretch;
+    align-content: stretch;
+}
+
+.container-header {
+    display: grid;
+    gap: 10px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    grid-template-columns: 1% 20% 30% auto;
+    justify-items: start;
+    align-items: center;
+    justify-content: start;
+    align-content: center;
+}
+
+.container-base {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    justify-items: center;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.container-responsive {
+    display: flex;
+    box-sizing: border-box;
+}
+
+.stackpanel-horizontal {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.stackpanel-horizontal-gap10 {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    gap: 10px;
+}
+
+.stackpanel-vertical-padding10-gap10 {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    flex-direction: column;
+    justify-items: stretch;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.scrollbox {
+    display: flex;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+}
+
+.scrollbox:hover {
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+.container-text-L {
+    font-size: 22px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.container-text-M {
+    font-size: 18px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.container-text-S {
+    font-size: 16px;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.textbox-filter {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    display: flex;
+    height: 5vmin;
+    width: 100%;
+    border-radius: 10px;
+    border-color: #E0E0E0;
+    border-width: 2px;
+    border-style: solid;
+    background-color: #FFFFFF;
+    font-size: 16px;
+    text-align: left;
+    text-indent: 10px;
+    letter-spacing: 1px;
+    font-family: sans-serif;
+    outline: none;
+    cursor: text;
+}
+
+.textbox-filter:hover {
+    box-shadow: 0 0 20px #b2b2b2;
+}
+
+.textbox-filter:focus-visible {
+    border-color: #000000;
+}
+
+.color-cell {
+    width: 4em;
+    height: 1em;
+}

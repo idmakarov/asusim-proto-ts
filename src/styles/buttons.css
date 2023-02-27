@@ -1,0 +1,56 @@
+.button-sim-control {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    /* creating a custom design */
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0; 
+    padding: 0;
+    width: 1.6em;
+    height: 1.6em;
+    background-color: transparent;
+    color: #3F6BEA;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: transparent;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.button-sim-control:hover:enabled {
+    background-color: #3F6BEA2f;
+}
+
+.button-sim-control:focus-visible:enabled {
+    border-color: #3f6aea7c;
+}
+
+.button-sim-control:disabled {
+    opacity: .3;
+}
+
+.button-sim-control:active:enabled {
+    transform: scale(.97);
+    background-color: #3F6BEA2f;
+}
+
+.button-fake {
+    width: 20em;
+    height: 5em;
+    border-radius: 10px;
+}
+
+.button-fake:hover {
+    background-color: #a6b7e9;
+}
+
+.button-fake:active {
+    transform: scale(.97);
+}

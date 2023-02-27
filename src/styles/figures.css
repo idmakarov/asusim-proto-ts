@@ -1,0 +1,74 @@
+.triangle-play {
+	position: relative;
+	background-color: #3F6BEA;
+	text-align: left;
+}
+.triangle-play:before,
+.triangle-play:after {
+	content: '';
+	position: absolute;
+	background-color: inherit;
+}
+.triangle-play,
+.triangle-play:before,
+.triangle-play:after {
+	width:  .6em;
+	height: .6em;
+	border-top-right-radius: 30%;
+}
+
+.triangle-play {
+	transform: rotate(30deg) skewX(-30deg) scale(1,.866);
+}
+.triangle-play:before {
+	transform: rotate(-135deg) skewX(-45deg) scale(1.414,.707) translate(0,-50%);
+}
+.triangle-play:after {
+	transform: rotate(135deg) skewY(-45deg) scale(.707,1.414) translate(50%);
+}
+
+.rectangle-pause {
+    display: flex;
+    height: 1em;
+    width: .27em;
+    border-radius: 3px;
+    background-color: #3F6BEA;
+}
+
+.rectangle-pause2 {
+    display: flex;
+    height: 1em;
+    width: .27em;
+    margin-left: .27em;
+    border-radius: 3px;
+    background-color: #3F6BEA;
+}
+
+.rectangle-stop {
+    display: flex;
+    width: .9em;
+    height: .9em;
+    border-radius: 3px;
+    background-color: #3F6BEA;
+}
+
+.circle-ok {
+    background-color: #15cc1e;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 50%;
+}
+
+.circle-idle {
+    background-color: #8b8b8b;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 50%;
+}
+
+.circle-error {
+    background-color: #ee1818;
+    width: 1.2em;
+    height: 1.2em;
+    border-radius: 50%;
+}
