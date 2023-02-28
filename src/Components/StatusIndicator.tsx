@@ -1,11 +1,6 @@
 import React from "react";
 import "src/styles/figures.css";
-
-enum SimStatusEnum {
-    Ok = "ok",
-    Idle = "idle",
-    Error = "error",
-}
+import { SimStatusEnum } from "src/utils/sim-enums";
 
 interface StatusIndicatorDefaultProps {
     status?: SimStatusEnum;
@@ -31,4 +26,3 @@ class StatusIndicator extends React.Component<Props> {
 }
 
 export default StatusIndicator;
-export { SimStatusEnum };

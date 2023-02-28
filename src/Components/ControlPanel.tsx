@@ -1,39 +1,12 @@
 import React from "react";
 import ActionButton from "./ActionButton";
-import StatusIndicator, { SimStatusEnum } from "./StatusIndicator";
+import StatusIndicator from "./StatusIndicator";
 import TimeString from "./TimeString";
 import "src/styles/buttons.css";
 import "src/styles/containers.css";
 import "src/styles/figures.css";
-
-enum SimActionEnum {
-    None = 0,
-    Start,
-    Pause,
-    Stop,
-}
-
-enum SimStateEnum {
-    InitialState = "Начальное состояние",
-    Started = "Симуляция запущена",
-    Paused = "Симуляция приостановлена",
-    Stopped = "Симуляция остановлена",
-    Completed = "Симуляция завершена",
-    CriticalError = "Критическая ошибка",
-}
-
-function simStateToStatus(state: SimStateEnum) {
-    switch (state) {
-        case SimStateEnum.Stopped:
-            return SimStatusEnum.Idle;
-
-        case SimStateEnum.CriticalError:
-            return SimStatusEnum.Error;
-
-        default:
-            return SimStatusEnum.Ok;
-    }
-};
+import { SimActionEnum, SimStateEnum } from "src/utils/sim-enums";
+import { simStateToStatus } from "src/utils/sim-helpers";
 
 interface ControlPanelDefaultProps {
     className: string;
@@ -117,4 +90,3 @@ class ControlPanel extends React.Component<Props> {
 }
 
 export default ControlPanel;
-export { SimActionEnum, SimStateEnum, simStateToStatus };

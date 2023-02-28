@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "src/styles/pages.css";
 import "src/styles/containers.css"
 import "src/styles/buttons.css"
-import ActionButton from "../ActionButton";
+import ActionButton from "../Components/ActionButton";
 
 const MainPage = () => {
     const navigate = useNavigate();
