@@ -27,28 +27,28 @@ const SimulationPage = () => (
                     handleResizeFinished={undefined}
                 >
                     <GridSplitter
-                            splitterIdx={1}
-                            direction={SplitDirection.Horizontal}
-                            gutterTheme={GutterTheme.Light}
-                            minWidths={[200, 200, 400]}
-                            initialSizes={[17, 23, 60]}
-                            handleResizeFinished={undefined}
-                        >
-                            <div className="container-base" />
-                            <div className="container-base" />
-                            <MimicContainer />
-                        </GridSplitter>
-                        <GridSplitter
-                            splitterIdx={2}
-                            direction={SplitDirection.Horizontal}
-                            gutterTheme={GutterTheme.Light}
-                            minWidths={[200, 200]}
-                            initialSizes={[25, 75]}
-                            handleResizeFinished={undefined}
-                        >
-                            <div className="container-base" />
-                            <SimChartContainer />
-                        </GridSplitter>
+                        splitterIdx={1}
+                        direction={SplitDirection.Horizontal}
+                        gutterTheme={GutterTheme.Light}
+                        minWidths={[200, 200, 400]}
+                        initialSizes={[17, 23, 60]}
+                        handleResizeFinished={undefined}
+                    >
+                        <div className="container-base" />
+                        <div className="container-base" />
+                        <MimicContainer />
+                    </GridSplitter>
+                    <GridSplitter
+                        splitterIdx={2}
+                        direction={SplitDirection.Horizontal}
+                        gutterTheme={GutterTheme.Light}
+                        minWidths={[200, 200]}
+                        initialSizes={[25, 75]}
+                        handleResizeFinished={undefined}
+                    >
+                        <div className="container-base" />
+                        <SimChartContainer />
+                    </GridSplitter>
                 </GridSplitter>
             </div>
         </div>
