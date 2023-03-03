@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { Component, ReactNode } from "react";
 
 interface MimicContainerDefaultProps {
     title?: string;
@@ -12,10 +12,10 @@ interface MimicContainerProps extends MimicContainerDefaultProps {
 type DefaultProps = Readonly<MimicContainerDefaultProps>;
 type Props = Readonly<MimicContainerProps>;
 
-class MimicContainer extends React.Component<Props> {
+class MimicContainer extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         title: "Выбранная мнемосхема",
-        noDataComponent: <span className="container-text-S">Нет записей для отображения</span>
+        noDataComponent: <span className="container-text-S">Нет мнемосхем для отображения</span>
     }
 
     render() {

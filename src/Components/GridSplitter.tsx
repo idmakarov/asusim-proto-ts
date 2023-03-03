@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { Component, ReactNode } from "react";
 import ReactSplit, { GutterTheme, SplitDirection } from "@devbookhq/splitter";
 
 interface GridSplitterDefaultProps {
@@ -21,7 +21,7 @@ interface GridSplitterProps extends GridSplitterDefaultProps {}
 type DefaultProps = Readonly<GridSplitterDefaultProps>;
 type Props = Readonly<GridSplitterProps>;
 
-class GridSplitter extends React.Component<Props> {
+class GridSplitter extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         direction: undefined,
         minWidths: undefined,

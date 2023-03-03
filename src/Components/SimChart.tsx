@@ -1,4 +1,4 @@
-import React from "react";
+import { Component } from "react";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 interface SimChartProps {
@@ -8,7 +8,7 @@ interface SimChartProps {
 
 type Props = Readonly<SimChartProps>;
 
-class SimChart extends React.Component<Props> {
+class SimChart extends Component<Props> {
     render() {
         const lines = this.props.variables?.map((item) => {
             return <Line type='linear' dataKey={item.name} name={item.name} stroke={item.color} activeDot={{ r: 6 }} isAnimationActive={false}/>

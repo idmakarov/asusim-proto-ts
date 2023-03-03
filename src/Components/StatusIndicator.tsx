@@ -1,6 +1,6 @@
-import React from "react";
+import { Component } from "react";
 import "src/styles/figures.css";
-import { SimStatusEnum } from "src/utils/sim-enums";
+import { SimStatusEnum } from "src/utils/simEnums";
 
 interface StatusIndicatorDefaultProps {
     status?: SimStatusEnum;
@@ -12,7 +12,7 @@ interface StatusIndicatorProps extends StatusIndicatorDefaultProps {}
 type DefaultProps = Readonly<StatusIndicatorDefaultProps>;
 type Props = Readonly<StatusIndicatorProps>;
 
-class StatusIndicator extends React.Component<Props> {
+class StatusIndicator extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         status: SimStatusEnum.Ok,
         className: "",

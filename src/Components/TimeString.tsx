@@ -1,4 +1,4 @@
-import React from "react";
+import { Component } from "react";
 import "src/styles/containers.css"
 
 interface TimeStringDefaultProps {
@@ -12,7 +12,7 @@ interface TimeStringProps extends TimeStringDefaultProps {
 type DefaultProps = Readonly<TimeStringDefaultProps>;
 type Props = Readonly<TimeStringProps>;
 
-class TimeString extends React.Component<Props> {
+class TimeString extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         className: "container-text-L"
     };

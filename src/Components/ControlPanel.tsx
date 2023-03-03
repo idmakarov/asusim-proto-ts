@@ -1,12 +1,12 @@
-import React from "react";
+import { Component } from "react";
 import ActionButton from "./ActionButton";
 import StatusIndicator from "./StatusIndicator";
 import TimeString from "./TimeString";
 import "src/styles/buttons.css";
 import "src/styles/containers.css";
 import "src/styles/figures.css";
-import { SimActionEnum, SimStateEnum } from "src/utils/sim-enums";
-import { simStateToStatus } from "src/utils/sim-helpers";
+import { SimActionEnum, SimStateEnum } from "src/utils/simEnums";
+import { simStateToStatus } from "src/utils/simHelpers";
 
 interface ControlPanelDefaultProps {
     className: string;
@@ -21,7 +21,7 @@ interface ControlPanelProps extends ControlPanelDefaultProps {
 type DefaultProps = Readonly<ControlPanelDefaultProps>;
 type Props = Readonly<ControlPanelProps>;
 
-class ControlPanel extends React.Component<Props> {
+class ControlPanel extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         className: "container-header",
     };

@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { Component, ReactNode } from "react";
 
 interface ActionButtonDefaultProps {
     isEnabled?: boolean;
@@ -14,7 +14,7 @@ interface ActionButtonProps extends ActionButtonDefaultProps {
 type DefaultProps = Readonly<ActionButtonDefaultProps>;
 type Props = Readonly<ActionButtonProps>;
 
-class ActionButton extends React.Component<Props> {
+class ActionButton extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         isEnabled: true,
         isSubmitButton: false,

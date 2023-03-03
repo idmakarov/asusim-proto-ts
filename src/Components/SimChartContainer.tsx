@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import { Component, ReactNode } from "react";
 import SimChart from "./SimChart";
 import "src/styles/containers.css"
 
@@ -15,7 +15,7 @@ interface SimChartContainerProps extends SimChartContainerDefaultProps {
 type DefaultProps = Readonly<SimChartContainerDefaultProps>;
 type Props = Readonly<SimChartContainerProps>;
 
-class SimChartContainer extends React.Component<Props> {
+class SimChartContainer extends Component<Props> {
     public static readonly defaultProps: DefaultProps = {
         title: "График",
         noDataComponent: <span className='container-text-S'>Нет данных для отображения</span>,
@@ -25,7 +25,7 @@ class SimChartContainer extends React.Component<Props> {
         return (
             <div className='container-base'>
                 <div className='stackpanel-vertical-padding10-gap10'>
-                    <span className='container-text-M'></span>
+                    <span className='container-text-M'>{this.props.title}</span>
                     {
                         this.props.variables !== undefined && this.props.variables.length > 0 ?
                         <SimChart
