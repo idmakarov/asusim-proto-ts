@@ -34,22 +34,58 @@ function SimulationPage() {
         SessionId: "",
     };
 
-    const eventSourceController = new StubController(`${GatewayURL}${StubRequestDict.listen}`);
+    const listenUrl = (
+        `${GatewayURL}${StubRequestDict.listen}?` +
+        new URLSearchParams([['ms', '1000'], ['f', '10']])
+    );
+    const eventSourceController = new StubController(listenUrl);
     
     const [simState, setSimState] = useState(SimStateEnum.InitialState);
     const [state, setState] = useState(initState);
 
     const startSimuluation = () => {
-        setSimState(SimStateEnum.Started);
-        fetch(`${GatewayURL}${StubRequestDict.start}`, {method: "GET"})
-            .then((response) => response.status === 200 ? response.json() : setSimState(SimStateEnum.CriticalError))
-            .catch((err) => setSimState(SimStateEnum.CriticalError));
+        setSimState(SimStateEnum.Idle);
 
+        const url = (
+            `${GatewayURL}${StubRequestDict.start}?` +
+            new URLSearchParams({ modelId: '0' })
+        );
+        fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-type': 'text/plain',
+            }
+        })
+            .then(
+                (response) => response.status === 200
+                ? setSimState(SimStateEnum.Started)
+                : setSimState(SimStateEnum.CriticalError)
+            )
+            .catch((err) => setSimState(SimStateEnum.CriticalError));
+        
         eventSourceController.mount(updateData);
     };
 
     const stopSimulation = () => {
-        setSimState(SimStateEnum.Stopped);
+        setSimState(SimStateEnum.Idle);
+
+        const url = (
+            `${GatewayURL}${StubRequestDict.end}?` +
+            new URLSearchParams({ sessionId: '0' })
+        );
+        fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-type': 'text/plain'
+            }
+        })
+            .then(
+                (response) => response.status === 200
+                ? setSimState(SimStateEnum.Stopped)
+                : setSimState(SimStateEnum.CriticalError)
+            )
+            .catch((err) => setSimState(SimStateEnum.CriticalError));
+
         eventSourceController.unmount();
     };
 

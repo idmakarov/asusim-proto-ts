@@ -54,7 +54,11 @@ class ControlPanel extends Component<Props> {
                     <ActionButton
                         className="button-sim-control"
                         onButtonClick={this.handlePlayButtonClick}
-                        isEnabled={this.props.simState !== SimStateEnum.Started && this.props.simState !== SimStateEnum.Stopped}
+                        isEnabled={
+                            this.props.simState !== SimStateEnum.Started &&
+                            this.props.simState !== SimStateEnum.Stopped &&
+                            this.props.simState !== SimStateEnum.Idle
+                        }
                     >
                         <div className="triangle-play"/>
                     </ActionButton>
@@ -71,7 +75,10 @@ class ControlPanel extends Component<Props> {
                     <ActionButton
                         className="button-sim-control"
                         onButtonClick={this.handleStopButtonClick}
-                        isEnabled={this.props.simState === SimStateEnum.Started || this.props.simState === SimStateEnum.Paused}
+                        isEnabled={
+                            this.props.simState === SimStateEnum.Started ||
+                            this.props.simState === SimStateEnum.Paused
+                        }
                     >
                         <div className="rectangle-stop"/>
                     </ActionButton>

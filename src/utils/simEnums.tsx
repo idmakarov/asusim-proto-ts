@@ -11,6 +11,7 @@ enum SimStateEnum {
     Paused = "Симуляция приостановлена",
     Stopped = "Симуляция остановлена",
     Completed = "Симуляция завершена",
+    Idle = "Ожидание",
     CriticalError = "Критическая ошибка",
 }
 

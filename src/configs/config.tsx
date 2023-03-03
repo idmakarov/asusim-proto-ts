@@ -1,4 +1,4 @@
-const GatewayURL = "<http://localhost:5500/swagger>";
+const GatewayURL = "http://localhost:5256/swagger";
 
 const ApiRequestDict = {
     start: "/api/session/start",
