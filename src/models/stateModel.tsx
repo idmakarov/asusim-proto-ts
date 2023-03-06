@@ -1,12 +1,10 @@
+import SimVariableType from "./simVariableModel";
+
 interface IState {
     SimTime: Date;
-    Data: {
-        id: number;
-        variableName: string;
-        value: number;
-    }[];
+    Data: SimVariableType[];
     SessionId: string;
-}
+};
 
 type StateType = Readonly<IState>;
 

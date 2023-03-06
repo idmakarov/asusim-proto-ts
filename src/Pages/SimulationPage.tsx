@@ -11,8 +11,12 @@ import { useState } from "react";
 import { GatewayURL, StubRequestDict } from "src/configs/config";
 import StubController from "src/API/stubController";
 import { mimicTableColumns, simVariableTableColumns, variableTableColumns } from "src/configs/simTablesConfig";
-import StubDataType from "src/models/stubModel";
+import StubDataType from "src/models/stubDataModel";
 import StateType from "src/models/stateModel";
+import SimVariableType from "src/models/simVariableModel";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "src/store/store";
+import { updateState } from "src/store/stateSlice";
 
 const today = new Date();
 
@@ -27,87 +31,98 @@ const mimicTableData = [
     },
 ];
 
-function SimulationPage() {
-    const initState: StateType = {
-        SimTime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0),
-        Data: [],
-        SessionId: "",
-    };
+const listenUrl = (
+    `${GatewayURL}${StubRequestDict.listen}?` +
+    new URLSearchParams([['ms', '1000'], ['f', '10']])
+);
+const eventSourceController = new StubController(listenUrl);
 
-    const listenUrl = (
-        `${GatewayURL}${StubRequestDict.listen}?` +
-        new URLSearchParams([['ms', '1000'], ['f', '10']])
-    );
-    const eventSourceController = new StubController(listenUrl);
-    
+function SimulationPage() {    
     const [simState, setSimState] = useState(SimStateEnum.InitialState);
-    const [state, setState] = useState(initState);
+    // const [state, setState] = useState(initState);
+    
+    const state = useSelector((state: RootState) => state.state);
+    const dispatch = useDispatch();
+    const dispatchUpdateData = (data: string) => dispatch(updateState(data));
 
     const startSimuluation = () => {
         setSimState(SimStateEnum.Idle);
 
         const url = (
-            `${GatewayURL}${StubRequestDict.start}?` +
-            new URLSearchParams({ modelId: '0' })
+            `${GatewayURL}${StubRequestDict.start}`//?` +
+            //new URLSearchParams({ modelId: '0' })
         );
-        fetch(url, {
-            method: "GET",
-            headers: {
-                'Content-type': 'text/plain',
-            }
-        })
+        fetch(url, { method: "GET" })
             .then(
                 (response) => response.status === 200
                 ? setSimState(SimStateEnum.Started)
-                : setSimState(SimStateEnum.CriticalError)
+                : setSimState(SimStateEnum.CriticalError),
+                (reason) => alert(reason)
             )
             .catch((err) => setSimState(SimStateEnum.CriticalError));
-        
-        eventSourceController.mount(updateData);
+
+        eventSourceController.mount(dispatchUpdateData);
     };
+
+    const stopAndInit = () => {
+        setSimState(SimStateEnum.Stopped);
+        setInterval(
+            () => setSimState(SimStateEnum.InitialState),
+            500
+        );
+    }
 
     const stopSimulation = () => {
         setSimState(SimStateEnum.Idle);
 
         const url = (
-            `${GatewayURL}${StubRequestDict.end}?` +
-            new URLSearchParams({ sessionId: '0' })
+            `${GatewayURL}${StubRequestDict.end}`//?` +
+            //new URLSearchParams({ sessionId: '0' })
         );
-        fetch(url, {
-            method: "GET",
-            headers: {
-                'Content-type': 'text/plain'
-            }
-        })
+        fetch(url, { method: "GET" })
             .then(
                 (response) => response.status === 200
-                ? setSimState(SimStateEnum.Stopped)
-                : setSimState(SimStateEnum.CriticalError)
+                ? stopAndInit()
+                : setSimState(SimStateEnum.CriticalError),
+                (reason) => alert(reason)//stopAndInit()
             )
             .catch((err) => setSimState(SimStateEnum.CriticalError));
 
         eventSourceController.unmount();
     };
 
-    const updateData = (responseResult: string) => {
-        const parsedData: StubDataType = JSON.parse(responseResult);
-        if (parsedData.SimTime !== state.SimTime) {
-            const newData: StateType = {
-                SimTime: parsedData.SimTime,
-                Data: parsedData.Data.map(
-                    (pair: { key: string, value: number }, index: number) => {
-                        return ({
-                            id: index,
-                            variableName: pair.key,
-                            value: pair.value,
-                        });
-                    }),
-                SessionId: "",
-            };
+    // const updateData = (responseResult: string) => {
+    //     try {
+    //         const parsedData: StubDataType = JSON.parse(responseResult);
+    //         const newSimTime = new Date(parsedData.SimTime);
 
-            setState(newData);
-        }
-    };
+    //         if (newSimTime !== state.SimTime) {
+    //             const dataArray = Object.entries(parsedData.Data);
+    //             const newSimData: SimVariableType[] = dataArray.map(
+    //                 (pair, index: number) => (
+    //                     {
+    //                         id: index,
+    //                         name: pair[0],
+    //                         value: Number.parseFloat(pair[1]),
+    //                         isOnChart: false,
+    //                         color: "",
+    //                     }
+    //                 )
+    //             );
+
+    //             const newState: StateType = {
+    //                 SimTime: newSimTime,
+    //                 Data: newSimData,
+    //                 SessionId: parsedData.SessionId,
+    //             };
+
+    //             setState(newState);
+    //         }
+    //     }
+    //     catch (e) {
+    //         console.log(e);
+    //     }
+    // };
 
     const onActionChanged = (simAction: SimActionEnum) => {
         switch(simAction) {
@@ -131,7 +146,7 @@ function SimulationPage() {
                     <ControlPanel
                         handleActionChanged={onActionChanged}
                         simState={simState}
-                        simTime={state.SimTime}
+                        simTime={new Date(state.SimTime)}
                     />
                     <GridSplitter
                         splitterIdx={0}

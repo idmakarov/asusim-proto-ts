@@ -14,15 +14,21 @@ class StubController implements IStubController {
     }
 
     mount(action: (param: any) => void) {
-        if (this.eventSource === undefined) {
+        if (!this.eventSource) {
             this.eventSource = new EventSource(this.url);
         }
 
-        this.eventSource.onmessage = (e) => action(e.data);
+        if (!this.eventSource.onmessage)
+        {
+            this.eventSource.onmessage = (e) => action(e.data);
+        }
     };
 
     unmount() {
-        this.eventSource?.close();
+        if (this.eventSource !== undefined) {
+            this.eventSource.onmessage = null;
+            // this.eventSource.close();
+        }
     };
 }
 
