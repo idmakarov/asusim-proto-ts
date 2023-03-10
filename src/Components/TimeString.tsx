@@ -1,5 +1,5 @@
 import { Component } from "react";
-import "src/styles/containers.css"
+import "../styles/containers.css"
 
 interface TimeStringDefaultProps {
     className?: string;

@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
+import sessionInfoSlice from './sessionInfoSlice';
+import simStateSlice from './simStateSlice';
 import stateSlice from './stateSlice';
 
 const store = configureStore({
   	reducer: {
-		state: stateSlice
+		state: stateSlice,
+		simState: simStateSlice,
+		sessionInfo: sessionInfoSlice,
 	}
 });
 

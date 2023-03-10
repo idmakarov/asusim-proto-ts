@@ -1,6 +1,6 @@
 import { Component, ReactNode } from "react";
 import SimChart from "./SimChart";
-import "src/styles/containers.css"
+import "../styles/containers.css"
 
 interface SimChartContainerDefaultProps {
     title?: string;

@@ -1,9 +1,9 @@
 import ReactDataGrid from "@inovua/reactdatagrid-community";
 import { ChangeEvent, Component, ReactNode } from "react";
-import "src/styles/containers.css"
+import "../styles/containers.css"
 import '@inovua/reactdatagrid-community/index.css'
 import { TypeRowProps } from "@inovua/reactdatagrid-community/types";
-import dataGridStyle from "src/styles/dataGridStyle";
+import dataGridStyle from "../styles/dataGridStyle";
 
 
 interface SimGridContainerDefaultProps {

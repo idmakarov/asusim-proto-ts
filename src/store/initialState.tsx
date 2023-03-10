@@ -1,6 +1,6 @@
-import MimicDataType from "src/models/mimicDataModel";
-import StateType from "src/models/stateModel";
-import { SimStateEnum } from "src/utils/simEnums";
+import MimicDataType from "../models/mimicDataModel";
+import StateType from "../models/stateModel";
+import { SimStateEnum } from "../utils/simEnums";
 
 interface IGlobalState {
     state: StateType;
@@ -26,7 +26,6 @@ const initialState: IGlobalState = {
     state: {
         SimTime: new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0),
         Data: [],
-        SessionId: "",
     },
     simState: SimStateEnum.InitialState,
     chartData: [],

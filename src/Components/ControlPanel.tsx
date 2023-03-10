@@ -2,11 +2,11 @@ import { Component } from "react";
 import ActionButton from "./ActionButton";
 import StatusIndicator from "./StatusIndicator";
 import TimeString from "./TimeString";
-import "src/styles/buttons.css";
-import "src/styles/containers.css";
-import "src/styles/figures.css";
-import { SimActionEnum, SimStateEnum } from "src/utils/simEnums";
-import { simStateToStatus } from "src/utils/simHelpers";
+import "../styles/buttons.css";
+import "../styles/containers.css";
+import "../styles/figures.css";
+import { SimActionEnum, SimStateEnum } from "../utils/simEnums";
+import { simStateToStatus } from "../utils/simHelpers";
 
 interface ControlPanelDefaultProps {
     className: string;

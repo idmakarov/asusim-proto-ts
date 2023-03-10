@@ -1,8 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "src/styles/pages.css";
-import "src/styles/containers.css"
-import "src/styles/buttons.css"
+import "../styles/pages.css";
+import "../styles/containers.css"
+import "../styles/buttons.css"
 import ActionButton from "../Components/ActionButton";
 
 const MainPage = () => {

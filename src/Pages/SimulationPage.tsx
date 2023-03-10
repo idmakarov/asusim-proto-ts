@@ -1,24 +1,25 @@
 import { GutterTheme, SplitDirection } from "@devbookhq/splitter";
-import MimicContainer from "src/Components/MimicContainer";
-import SimChartContainer from "src/Components/SimChartContainer";
-import "src/styles/pages.css";
-import "src/styles/containers.css";
-import { SimActionEnum, SimStateEnum } from "src/utils/simEnums";
+import MimicContainer from "../Components/MimicContainer";
+import SimChartContainer from "../Components/SimChartContainer";
+import "../styles/pages.css";
+import "../styles/containers.css";
+import { SimActionEnum, SimStateEnum } from "../utils/simEnums";
 import ControlPanel from "../Components/ControlPanel";
 import GridSplitter from "../Components/GridSplitter";
-import SimGridContainer from "src/Components/SimGridContainer";
+import SimGridContainer from "../Components/SimGridContainer";
 import { useState } from "react";
-import { GatewayURL, StubRequestDict } from "src/configs/config";
-import StubController from "src/API/stubController";
-import { mimicTableColumns, simVariableTableColumns, variableTableColumns } from "src/configs/simTablesConfig";
-import StubDataType from "src/models/stubDataModel";
-import StateType from "src/models/stateModel";
-import SimVariableType from "src/models/simVariableModel";
+import { ApiRequestDict, GatewayURL, StubRequestDict } from "../configs/config";
+import StubController from "../API/stubController";
+import { mimicTableColumns, simVariableTableColumns, variableTableColumns } from "../configs/simTablesConfig";
+import StubDataType from "../models/stubDataModel";
+import StateType from "../models/stateModel";
+import SimVariableType from "../models/simVariableModel";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "src/store/store";
-import { updateState } from "src/store/stateSlice";
-
-const today = new Date();
+import { RootState } from "../store/store";
+import { updateState } from "../store/stateSlice";
+import { fromJSON } from "../utils/jsonConverter";
+import { setSessionInfo } from "../store/sessionInfoSlice";
+import { setSimState } from "../store/simStateSlice";
 
 const mimicTableData = [
     {
@@ -31,62 +32,72 @@ const mimicTableData = [
     },
 ];
 
-const listenUrl = (
-    `${GatewayURL}${StubRequestDict.listen}?` +
-    new URLSearchParams([['ms', '1000'], ['f', '10']])
-);
-const eventSourceController = new StubController(listenUrl);
-
 function SimulationPage() {    
-    const [simState, setSimState] = useState(SimStateEnum.InitialState);
-    // const [state, setState] = useState(initState);
-    
     const state = useSelector((state: RootState) => state.state);
     const dispatch = useDispatch();
     const dispatchUpdateData = (data: string) => dispatch(updateState(data));
 
+    const sessionInfo = useSelector((state: RootState) => state.sessionInfo);
+    const simState = useSelector((state: RootState) => state.simState);
+
+    const eventSourceController = new StubController();
+
     const startSimuluation = () => {
-        setSimState(SimStateEnum.Idle);
+        dispatch(setSimState(SimStateEnum.Idle));
 
         const url = (
-            `${GatewayURL}${StubRequestDict.start}`//?` +
-            //new URLSearchParams({ modelId: '0' })
+            // `${GatewayURL}${StubRequestDict.start}`
+            `${GatewayURL}${ApiRequestDict.start}?` +
+            new URLSearchParams([['periodMs', '1000'], ['fields', '10']])
         );
         fetch(url, { method: "GET" })
-            .then(
-                (response) => response.status === 200
-                ? setSimState(SimStateEnum.Started)
-                : setSimState(SimStateEnum.CriticalError),
+            .then(response => {
+                    if (response.status === 200) {
+                        dispatch(setSimState(SimStateEnum.Started));
+                        return response.json();
+                    } else {
+                        dispatch(setSimState(SimStateEnum.CriticalError));
+                    }
+                },
                 (reason) => alert(reason)
             )
-            .catch((err) => setSimState(SimStateEnum.CriticalError));
+            .then(guid => {
+                dispatch(setSessionInfo(guid));
 
-        eventSourceController.mount(dispatchUpdateData);
+                const listenUrl = (
+                    // `${GatewayURL}${StubRequestDict.listen}?` +
+                    `${GatewayURL}${ApiRequestDict.listen}?` +
+                    new URLSearchParams([['s', guid]])
+                );
+                eventSourceController.mount(listenUrl, dispatchUpdateData);
+            })
+            .catch(() => dispatch(setSimState(SimStateEnum.CriticalError)));
     };
 
     const stopAndInit = () => {
-        setSimState(SimStateEnum.Stopped);
-        setInterval(
-            () => setSimState(SimStateEnum.InitialState),
+        dispatch(setSimState(SimStateEnum.Stopped));
+        setTimeout(
+            () => dispatch(setSimState(SimStateEnum.InitialState)),
             500
         );
     }
 
     const stopSimulation = () => {
-        setSimState(SimStateEnum.Idle);
+        dispatch(setSimState(SimStateEnum.Idle));
 
         const url = (
-            `${GatewayURL}${StubRequestDict.end}`//?` +
-            //new URLSearchParams({ sessionId: '0' })
+            // `${GatewayURL}${StubRequestDict.end}`
+            `${GatewayURL}${ApiRequestDict.end}?` +
+            new URLSearchParams([['sessionId', sessionInfo.sessionId]])
         );
         fetch(url, { method: "GET" })
             .then(
-                (response) => response.status === 200
+                response => response.status === 200
                 ? stopAndInit()
-                : setSimState(SimStateEnum.CriticalError),
-                (reason) => alert(reason)//stopAndInit()
+                : dispatch(setSimState(SimStateEnum.CriticalError)),
+                reason => alert(reason)//stopAndInit()
             )
-            .catch((err) => setSimState(SimStateEnum.CriticalError));
+            .catch(() => dispatch(setSimState(SimStateEnum.CriticalError)));
 
         eventSourceController.unmount();
     };
@@ -145,7 +156,7 @@ function SimulationPage() {
                 <div className="container-simulation">
                     <ControlPanel
                         handleActionChanged={onActionChanged}
-                        simState={simState}
+                        simState={simState.simState}
                         simTime={new Date(state.SimTime)}
                     />
                     <GridSplitter

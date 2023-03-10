@@ -1,4 +1,4 @@
-import { treatAsType, TypeEnum } from "src/utils/jsonConverter";
+import { treatAsType, TypeEnum } from "../utils/jsonConverter";
 
 interface IStubData {
     SimTime: Date;

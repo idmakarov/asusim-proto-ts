@@ -1,19 +1,19 @@
 interface IStubController {
-    url: string;
+    url?: string;
     eventSource?: EventSource;
-    mount: (action: (param: any) => void) => void;
+    mount: (url: string, action: (param: any) => void) => void;
     unmount: () => void;
 };
 
 class StubController implements IStubController {
-    url: string;
+    url?: string;
     eventSource?: EventSource;
 
-    constructor(url: string) {
-        this.url = url;
-    }
+    mount(url: string, action: (param: any) => void) {
+        if (!this.url) {
+            this.url = url;
+        }
 
-    mount(action: (param: any) => void) {
         if (!this.eventSource) {
             this.eventSource = new EventSource(this.url);
         }
@@ -25,9 +25,9 @@ class StubController implements IStubController {
     };
 
     unmount() {
-        if (this.eventSource !== undefined) {
+        if (this.eventSource) {
             this.eventSource.onmessage = null;
-            // this.eventSource.close();
+            this.eventSource.close();
         }
     };
 }

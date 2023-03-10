@@ -1,5 +1,5 @@
 import { TypeColumns } from "@inovua/reactdatagrid-community/types/TypeColumn";
-import "src/styles/containers.css";
+import "../styles/containers.css";
 
 const mimicTableColumns: TypeColumns = [
     {

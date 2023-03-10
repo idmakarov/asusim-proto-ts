@@ -1,6 +1,6 @@
 import { Component } from "react";
-import "src/styles/figures.css";
-import { SimStatusEnum } from "src/utils/simEnums";
+import "../styles/figures.css";
+import { SimStatusEnum } from "../utils/simEnums";
 
 interface StatusIndicatorDefaultProps {
     status?: SimStatusEnum;
